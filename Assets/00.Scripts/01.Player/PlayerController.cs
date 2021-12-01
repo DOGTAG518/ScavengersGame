@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private Vector3 MoveDir;                // 캐릭터의 움직이는 방향.
+
     // 스피드 조정 변수
     [SerializeField]
     private float walkSpeed;
@@ -40,7 +42,7 @@ public class PlayerController : MonoBehaviour
     // 필요한 컴포넌트
     [SerializeField]
     private Camera theCamera;
-    private Rigidbody myRigid;
+    private CharacterController controller;
     private CapsuleCollider capsuleCollider;
 
     PlayerStateManager playerState = null;
@@ -50,7 +52,7 @@ public class PlayerController : MonoBehaviour
     {
         // 컴포넌트 할당
         capsuleCollider = GetComponent<CapsuleCollider>();
-        myRigid = GetComponent<Rigidbody>();
+        controller = GetComponent<CharacterController>();
         theCamera = GetComponentInChildren<Camera>();
 
         // 초기화
@@ -94,10 +96,10 @@ public class PlayerController : MonoBehaviour
     // 점프
     private void Jump()
     {
-        if (isCrouch)
-            Crouch();
+        //if (isCrouch)
+        //    Crouch();
 
-        myRigid.velocity = transform.up * jumpForce;
+        //myRigid.velocity = transform.up * jumpForce;
     }
 
     // 달리기 시도
@@ -177,15 +179,34 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        float _moveDirX = Input.GetAxisRaw("Horizontal");
-        float _moveDirZ = Input.GetAxisRaw("Vertical");
+        // 현재 캐릭터가 땅에 있는가?
+        if (controller.isGrounded)
+        {
+            // 위, 아래 움직임 셋팅. 
+            MoveDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
-        Vector3 _moveHorizontal = transform.right * _moveDirX;
-        Vector3 _moveVertical = transform.forward * _moveDirZ;
+            // 벡터를 로컬 좌표계 기준에서 월드 좌표계 기준으로 변환한다.
+            MoveDir = transform.TransformDirection(MoveDir);
 
-        Vector3 _velocity = (_moveHorizontal + _moveVertical).normalized * applySpeed;
+            // 스피드 증가.
+            MoveDir *= applySpeed;
 
-        myRigid.MovePosition(transform.position + _velocity * Time.deltaTime);
+            // 캐릭터 점프
+            if (Input.GetButton("Jump"))
+            {
+                if (isCrouch)
+                    Crouch();
+
+                MoveDir.y = jumpForce;
+            }
+
+        }
+
+        // 캐릭터에 중력 적용.
+        MoveDir.y -= 20 * Time.deltaTime;
+
+        // 캐릭터 움직임.
+        controller.Move(MoveDir * Time.deltaTime);
     }
 
     private void CameraRotation()
@@ -203,6 +224,6 @@ public class PlayerController : MonoBehaviour
     {
         float _yRotation = Input.GetAxisRaw("Mouse X");
         Vector3 _characterRotationY = new Vector3(0f, _yRotation, 0f) * lookSensitivity;
-        myRigid.MoveRotation(myRigid.rotation * Quaternion.Euler(_characterRotationY));
+        transform.Rotate(_characterRotationY, Space.World);
     }
 }
