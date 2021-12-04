@@ -27,7 +27,8 @@ public class WorldManager : MonoBehaviour
 
     #region Time
 
-    public int day, hour, minute = 0;
+    public int day, minute = 0;
+    public int hour = 6;
     public float second = 0;
 
     bool isNight = false;

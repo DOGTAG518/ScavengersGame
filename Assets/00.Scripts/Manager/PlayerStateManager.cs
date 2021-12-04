@@ -22,6 +22,18 @@ public class PlayerStateManager : MonoBehaviour
 
     public PlayerState playerState = PlayerState.Play;
 
+    private void Start()
+    {
+        GameEvent.OnOpenUIPage += OpenUIPage;
+
+        OpenUIPage(false);
+    }
+
+    private void OnDestroy()
+    {
+        GameEvent.OnOpenUIPage -= OpenUIPage;
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -37,14 +49,26 @@ public class PlayerStateManager : MonoBehaviour
         {
             case PlayerState.Play:
                 playerState = PlayerState.UI;
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
+                GameEvent.OpenUIPage(true);
                 break;
             case PlayerState.UI:
                 playerState = PlayerState.Play;
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
+                GameEvent.OpenUIPage(false);
                 break;
         }
     }
+
+    #region Event
+
+    void OpenUIPage(bool isOn)
+    {
+        Cursor.visible = isOn;
+
+        if (isOn)
+            Cursor.lockState = CursorLockMode.None;
+        else
+            Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    #endregion
 }

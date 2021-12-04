@@ -1,15 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameEvent : MonoBehaviour
+public static class GameEvent
 {
-    public UnityEvent<bool> OnOpenUIPage;
+    public static Action<bool> OnOpenUIPage;
 
-    public void OpenUIPage(bool isOn)
+    #region Invoke
+
+    public static void OpenUIPage(bool isOn)
     {
         if (OnOpenUIPage != null)
             OnOpenUIPage.Invoke(isOn);
     }
+
+
+    #endregion
 }
