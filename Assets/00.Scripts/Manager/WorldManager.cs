@@ -6,7 +6,7 @@ public class WorldManager : MonoBehaviour
 {
     static WorldManager instance = null;
 
-    public WorldManager Instance
+    public static WorldManager Instance
     {
         get
         {

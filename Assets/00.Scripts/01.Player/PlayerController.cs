@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     private CapsuleCollider capsuleCollider;
 
     PlayerStateManager playerState = null;
-
+    PlayerStats playerStats = null;
 
     void Start()
     {
@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour
         applyCrouchPosY = originPosY;
 
         playerState = PlayerStateManager.Instance;
+        playerStats = GetComponent<PlayerStats>();
     }
 
     void Update()
@@ -121,8 +122,16 @@ public class PlayerController : MonoBehaviour
         if (isCrouch)
             Crouch();
 
-        isRun = true;
-        applySpeed = runSpeed;
+        if (playerStats.IsCanRun())
+        {
+            isRun = true;
+            applySpeed = runSpeed;
+        }
+        else
+        {
+            isRun = false;
+            applySpeed = walkSpeed;
+        }
     }
 
     // 달리기 취소
@@ -188,6 +197,9 @@ public class PlayerController : MonoBehaviour
             // 벡터를 로컬 좌표계 기준에서 월드 좌표계 기준으로 변환한다.
             MoveDir = transform.TransformDirection(MoveDir);
 
+            if (MoveDir.magnitude > 1)
+                MoveDir = MoveDir.normalized;
+
             // 스피드 증가.
             MoveDir *= applySpeed;
 
@@ -198,6 +210,7 @@ public class PlayerController : MonoBehaviour
                     Crouch();
 
                 MoveDir.y = jumpForce;
+                playerStats.Jump();
             }
 
         }
@@ -207,6 +220,11 @@ public class PlayerController : MonoBehaviour
 
         // 캐릭터 움직임.
         controller.Move(MoveDir * Time.deltaTime);
+
+        if (MoveDir.magnitude > 0 && isRun)
+            playerStats.NowRun();
+        else
+            playerStats.Rest();
     }
 
     private void CameraRotation()
