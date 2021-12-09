@@ -79,30 +79,42 @@ public class PlayerStats : MonoBehaviour
             return false;
     }
 
+    public bool IsCanJump()
+    {
+        if (nowStamina >= Define.DEFAULTCONSUMESTAMINA)
+            return true;
+        else
+            return false;
+    }
+
     public void NowRun()
     {
-        nowStamina -= 5 * Time.deltaTime;
+        nowStamina -= Define.DEFAULTCONSUMESTAMINA* Time.deltaTime;
 
         restTime = 0;
     }
 
     public void Jump()
     {
-        nowStamina -= 5;
+        nowStamina -= Define.DEFAULTCONSUMESTAMINA;
 
         restTime = 0;
     }
 
     public void Rest()
     {
-        if (restTime < 2)
-            restTime += Time.deltaTime;
-        else
+        if (restTime >= Define.DEFAULTRESTTIME)
         {
             nowStamina += (stamina * 0.05f * Time.deltaTime);
             if (nowStamina > stamina)
                 nowStamina = stamina;
         }
+    }
+
+    public void StartRest()
+    {
+        if (restTime < Define.DEFAULTRESTTIME)
+            restTime += Time.deltaTime;
     }
 
     #endregion

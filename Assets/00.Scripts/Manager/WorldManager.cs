@@ -19,6 +19,11 @@ public class WorldManager : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
     private void Update()
     {
         CalcWorldTime();
@@ -61,7 +66,7 @@ public class WorldManager : MonoBehaviour
         // 시간, 분, 초로 태양의 위치 계산
         float totalTimeTemp = 0;
 
-        totalTimeTemp += (hour * 60 * 60) + (minute * 60) + second;
+        totalTimeTemp += GetTotalTime();
 
         var rotationTemp = transform.eulerAngles;
         rotationTemp.x = ((totalTimeTemp / (24 * 60 * 60)) * 360) - 90f;
@@ -82,6 +87,7 @@ public class WorldManager : MonoBehaviour
             {
                 RenderSettings.fogColor = Color.black;
                 RenderSettings.fog = true;
+                RenderSettings.fogMode = FogMode.Exponential;
             }
 
             if(hour >= 18)
@@ -96,8 +102,21 @@ public class WorldManager : MonoBehaviour
         else
         {
             if (RenderSettings.fog != false)
+            {
+                RenderSettings.fogMode = FogMode.Exponential;
                 RenderSettings.fog = false;
+            }
         }
+    }
+
+    public float GetTotalTime()
+    {
+        return (hour * 60 * 60) + (minute * 60) + second;
+    }
+
+    public bool GetIsNight()
+    {
+        return isNight;
     }
 
     #endregion

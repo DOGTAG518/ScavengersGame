@@ -17,4 +17,11 @@ public static class Define
     public const int MAXMENTAL = 150;                   // 최대 정신력
 
     #endregion
+
+    #region PlayerStatCalc
+
+    public const float DEFAULTRESTTIME = 1;
+    public const float DEFAULTCONSUMESTAMINA = 10;      // 기본 소모 스테미너
+
+    #endregion
 }
