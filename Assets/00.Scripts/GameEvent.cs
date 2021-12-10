@@ -6,7 +6,16 @@ using UnityEngine.Events;
 
 public static class GameEvent
 {
+    #region UI Event
     public static Action<bool> OnOpenUIPage;
+    #endregion
+
+    #region Weather Event
+
+    public static Action<WeatherEnum> OnWeatherChange;
+
+    #endregion
+
 
     #region Invoke
 
@@ -16,6 +25,12 @@ public static class GameEvent
             OnOpenUIPage.Invoke(isOn);
     }
 
+
+    public static void WeatherChange(WeatherEnum weather)
+    {
+        if (OnWeatherChange != null)
+            OnWeatherChange.Invoke(weather);
+    }
 
     #endregion
 }

@@ -22,6 +22,8 @@ public class WorldManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
+        nowWeather = WeatherEnum.Sunny;
     }
 
     private void Update()
@@ -52,7 +54,9 @@ public class WorldManager : MonoBehaviour
                 minute = 0;
                 hour++;
 
-                if(hour >= 24)
+                CheckWeather();
+
+                if (hour >= 24)
                 {
                     hour = 0;
                     day++;
@@ -117,6 +121,39 @@ public class WorldManager : MonoBehaviour
     public bool GetIsNight()
     {
         return isNight;
+    }
+
+    #endregion
+
+    #region Weather
+
+    int rainStackhour = 0;
+    WeatherEnum nowWeather;
+
+    void CheckWeather()
+    {
+        rainStackhour++;
+        float rainPercent = 0;
+
+        switch(nowWeather)
+        {
+            case WeatherEnum.Sunny:
+                rainPercent = 5 + rainStackhour;
+                break;
+            case WeatherEnum.Rain:
+                rainPercent = 30;
+                break;
+        }
+
+        var randomvalue = Random.Range(0f, 100f);
+
+        if(randomvalue < rainPercent)
+        {
+            GameEvent.WeatherChange(WeatherEnum.Rain);
+            rainStackhour = 0;
+        }
+        else
+            GameEvent.WeatherChange(WeatherEnum.Sunny);
     }
 
     #endregion

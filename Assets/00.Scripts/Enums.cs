@@ -14,3 +14,9 @@ public enum PlayerState
 
     Max,
 }
+
+public enum WeatherEnum
+{
+    Sunny,
+    Rain,
+}
