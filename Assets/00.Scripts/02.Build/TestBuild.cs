@@ -28,10 +28,10 @@ public class SetPosition
 
         stepPositions.Clear();
 
-        var objCount = (int)(distance / originScale.x);
-        float objRemain = distance - (objCount * originScale.x);
+        var objCount = (int)(distance / originScale.z);
+        float objRemain = distance - (objCount * originScale.z);
 
-        float numDistance = (objRemain / objCount) + originScale.x;
+        float numDistance = ((objRemain / objCount) / 2) + originScale.z;
 
         for (int i = 0; i < objCount; i++)
         {
@@ -92,12 +92,21 @@ public class SetPosition
                 }
 
                 unit[i].transform.position = stepPositions[i];
+                unit[i].SetObjScale(numDistance);
             }
+        }
+    }
+
+    public void EndBuild()
+    {
+        for(int i = 0; i < unit.Count; i++)
+        {
+            unit[i].EndBuild();
         }
     }
 }
 
-public class TestBuild : MonoBehaviour
+public class TestBuild : BuildObjectParent
 {
     public TestBuildUnit OriginUnit;
 
@@ -147,16 +156,12 @@ public class TestBuild : MonoBehaviour
 
         if (buildCursor > 0)
         {
-            for(int i = 0; i < positions.Count; i++)
-            {
-                // 저장된 포지션의 카운트가 2개 이상이고 마지막 포지션이 아닌 경우(마지막 포지션은 추가로 계산해야함)
-                if(positions.Count > 1 && i < positions.Count - 1)
-                {
+            positions[buildCursor - 1].CalcPosition(hitPoint, OriginUnit);
 
-                }
-
-                positions[buildCursor - 1].CalcPosition(hitPoint, OriginUnit);
-            }
+            //for (int i = 0; i < positions.Count; i++)
+            //{
+            //    positions[buildCursor - 1].CalcPosition(hitPoint, OriginUnit);
+            //}
         }
         else
         {
@@ -179,7 +184,7 @@ public class TestBuild : MonoBehaviour
             {
                 positions[buildCursor - 1].SavePosition(hitPoint, OriginUnit);
 
-                isBuild = false;
+                EndBuild();
             }
         }
     }
@@ -194,6 +199,11 @@ public class TestBuild : MonoBehaviour
     public void EndBuild()
     {
         isBuild = false;
+
+        // 이벤트 형식으로 변경해야한다
+
+        for (int i = 0; i < positions.Count; i++)
+            positions[i].EndBuild();
     }
 
     bool IsCanBuild()

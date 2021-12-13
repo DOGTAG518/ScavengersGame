@@ -20,3 +20,17 @@ public enum WeatherEnum
     Sunny,
     Rain,
 }
+
+
+public enum ItemType
+{
+    Food,
+    Tool,
+
+}
+
+public enum BuildType
+{
+    SetPosition,
+    BluePrint,
+}

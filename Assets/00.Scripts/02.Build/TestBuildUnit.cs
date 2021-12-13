@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestBuildUnit : MonoBehaviour
+public class TestBuildUnit : BuildUnit
 {
     TestBuild testBuild;
 
@@ -15,6 +15,8 @@ public class TestBuildUnit : MonoBehaviour
     private void Start()
     {
         testBuild = transform.GetComponentInParent<TestBuild>();
+
+        SetCollider();
     }
 
     private void Update()
@@ -22,9 +24,16 @@ public class TestBuildUnit : MonoBehaviour
         CalcLegLength();
     }
 
-    public Vector3 ReturnTopObjScale()
+    public override Vector3 ReturnTopObjScale()
     {
         return TopObj.localScale;
+    }
+
+    public void SetObjScale(float zSize)
+    {
+        var size = TopObj.localScale;
+        size.z = zSize;
+        TopObj.localScale = size;
     }
 
     // 다리 길이 계산
@@ -55,5 +64,10 @@ public class TestBuildUnit : MonoBehaviour
             scaleTemp.y = distance;
             LegObjects[i].transform.localScale = scaleTemp;
         }
+    }
+
+    public override void EndBuild()
+    {
+        // 콜라이더 ON 제외하고 추가작업 필요한부분 넣기
     }
 }

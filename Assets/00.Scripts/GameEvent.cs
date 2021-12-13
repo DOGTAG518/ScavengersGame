@@ -25,7 +25,6 @@ public static class GameEvent
             OnOpenUIPage.Invoke(isOn);
     }
 
-
     public static void WeatherChange(WeatherEnum weather)
     {
         if (OnWeatherChange != null)

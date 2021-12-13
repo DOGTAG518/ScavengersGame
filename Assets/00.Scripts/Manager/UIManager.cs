@@ -6,6 +6,8 @@ public class UIManager : MonoBehaviour
 {
     public GameObject UIObject;
 
+    public GameObject BuildOption;
+
     private void Start()
     {
         GameEvent.OnOpenUIPage += OpenUIPage;
@@ -18,14 +20,27 @@ public class UIManager : MonoBehaviour
         GameEvent.OnOpenUIPage -= OpenUIPage;
     }
 
+    public void ReturnMainPage()
+    {
+        UIObject.SetActive(true);
+        BuildOption.SetActive(false);
+    }
+
     #region Event
 
     public void OpenUIPage(bool isOn)
     {
         UIObject.SetActive(isOn);
+        BuildOption.SetActive(false);
     }
 
     #endregion
+
+    public void OpenBuildPage()
+    {
+        UIObject.SetActive(false);
+        BuildOption.SetActive(true);
+    }
 
     public void OnCloseUI()
     {
