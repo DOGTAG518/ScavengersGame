@@ -99,7 +99,7 @@ public class WorldManager : MonoBehaviour
             else
                 totalTimeTemp = (6 * 60 * 60) - ((hour * 60 * 60) + (minute * 60) + second);
 
-            float fogDestiny = Mathf.Lerp(0, 0.3f, totalTimeTemp / (6 * 60 * 60));
+            float fogDestiny = Mathf.Lerp(0, 0.5f, totalTimeTemp / (6 * 60 * 60));
             RenderSettings.fogDensity = fogDestiny;
 
         }
