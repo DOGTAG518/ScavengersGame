@@ -1942,14 +1942,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2066386373, guid: 0159547af60a9104ebc74d1433729a9c, type: 3}
-      propertyPath: m_Antialiasing
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2066386373, guid: 0159547af60a9104ebc74d1433729a9c, type: 3}
-      propertyPath: m_RenderPostProcessing
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4253817223131040778, guid: 0159547af60a9104ebc74d1433729a9c, type: 3}
       propertyPath: m_Name
       value: DummyPlayer
