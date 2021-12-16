@@ -109,11 +109,7 @@ public class PlayerStats : MonoBehaviour
             if (nowStamina > stamina)
                 nowStamina = stamina;
         }
-    }
-
-    public void StartRest()
-    {
-        if (restTime < Define.DEFAULTRESTTIME)
+        else
             restTime += Time.deltaTime;
     }
 

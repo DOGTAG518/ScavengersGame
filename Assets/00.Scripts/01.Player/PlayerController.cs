@@ -67,6 +67,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        CheckRest();
+
         if (playerState.playerState == PlayerState.UI)
             return;
 
@@ -215,18 +217,19 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        if (MoveDir.magnitude > 0 && isRun)
-            playerStats.NowRun();
-        else if (MoveDir.magnitude == 0)
-            playerStats.StartRest();
-        else
-            playerStats.Rest();
-
         // 캐릭터에 중력 적용.
         MoveDir.y -= 20 * Time.deltaTime;
 
         // 캐릭터 움직임.
         controller.Move(MoveDir * Time.deltaTime);
+    }
+
+    private void CheckRest()
+    {
+        if (MoveDir.magnitude > 0 && isRun)
+            playerStats.NowRun();
+        else
+            playerStats.Rest();
     }
 
     private void CameraRotation()
