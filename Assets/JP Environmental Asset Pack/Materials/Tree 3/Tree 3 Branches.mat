@@ -21,19 +21,28 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Tree 3 Branches
-  m_Shader: {fileID: 4800000, guid: 0ca6dca7396eb48e5849247ffd444914, type: 3}
-  m_ShaderKeywords: _ALPHATEST_ON _NORMALMAP
+  m_Shader: {fileID: 4800000, guid: c06c91c9416ad0f4e8a67d6103e77fdc, type: 3}
+  m_ShaderKeywords: _ALPHATEST _COLOR_TINT _INTERACTION_OFF _LIGHTING_QUALITY_HIGH
+    _NORMALMAP _WIND
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
-  stringTagMap:
-    RenderType: Transparent
+  m_CustomRenderQueue: 2450
+  stringTagMap: {}
   disabledShaderPasses:
   - SHADOWCASTER
+  - MOTIONVECTORS
+  - DistortionVectors
+  - TransparentDepthPrepass
+  - TransparentDepthPostpass
+  - TransparentBackface
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Albedo:
+        m_Texture: {fileID: 2800000, guid: d5fec8a4daaaf524f87745a872e5f197, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 2800000, guid: d5fec8a4daaaf524f87745a872e5f197, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -70,7 +79,15 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 2800000, guid: 40c9bb014dd5b1c4e957526bba86ac84, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PackedMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -79,6 +96,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ThicknessMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -96,37 +117,75 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AlphaClip: 1
+    - _AlphaTest: 1
+    - _AlphaTestThreshold: 0.1
+    - _BakedMeshData: 0
     - _Blend: 0
     - _BumpScale: 1.08
     - _ClearCoat: 0
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 1
+    - _ColorCorrection: 0
+    - _ColorVariationSpread: 0.2
     - _Cull: 0
     - _Cutoff: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _DoubleSidedMode: 0
+    - _DoubleSidedNormalMode: 1
     - _DstBlend: 10
+    - _EmissionIntensity: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.283
     - _GlossyReflections: 1
+    - _LightingQuality: 0
     - _Metallic: 0.251
     - _Mode: 1
+    - _NormalMapScale: 1
+    - _ObjectHeight: 0.5
+    - _ObjectRadius: 0.5
     - _OcclusionStrength: 1
+    - _Overlay: 0
     - _Parallax: 0.02
     - _QueueOffset: 0
+    - _RecalculateWindNormals: 0.5
     - _ReceiveShadows: 1
+    - _SampleAlphaOverlay: 1
+    - _SampleColorOverlay: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 5
     - _Surface: 1
+    - _SurfaceMapMethod: 2
+    - _Translucency: 0
+    - _TranslucencyAmbient: 0.5
+    - _TranslucencyBlendMode: 0
+    - _TranslucencyDistortion: 0.5
+    - _TranslucencyScattering: 2
+    - _TranslucencyStrength: 1
+    - _TurbulenceStrength: 1
     - _UVSec: 0
+    - _VertexNormalStrength: 1
+    - _Wind: 1
+    - _WindStrength: 1
+    - _WindVariation: 0.3
     - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
+    - _GlossRemap: {r: 0, g: 1, b: 0, a: 0}
+    - _HSL: {r: 0.02, g: 0.05, b: 0.1, a: 0}
+    - _HSLVariation: {r: -0.02, g: -0.05, b: -0.1, a: 0}
+    - _OcclusionRemap: {r: 0, g: 1, b: 0, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    - _ThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+    - _TintVariation: {r: 1, g: 1, b: 1, a: 1}
+    - _TranslucencyColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TrunkBendFactor: {r: 1, g: 0, b: 0, a: 0}
+    - _WindFade: {r: 50, g: 20, b: 0, a: 0}
   m_BuildTextureStacks: []
